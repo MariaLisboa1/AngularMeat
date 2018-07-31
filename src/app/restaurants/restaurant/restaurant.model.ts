@@ -6,4 +6,6 @@ export interface Restaurant {
     deliveyEstimate: string
     rating: number
     imagePath: string
+    hours?:string
+    about?:string
 }

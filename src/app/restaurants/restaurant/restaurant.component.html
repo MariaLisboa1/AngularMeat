@@ -1,6 +1,6 @@
 <a [routerLink]="['/restaurants', restaurant.id]">
   <div class="place-info-box">
-    <span class="place-info-box-icon">
+    <span class="place-info-box-icon" [@restaurantAppeared]="restaurantState">
       <img [src]="restaurant.imagePath" />
     </span>
 

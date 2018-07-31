@@ -13,7 +13,7 @@
     <div class="table-responsive" *ngIf="items().length">
       <table class="table">
         <tbody>         
-          <tr *ngFor="let item of items()">
+          <tr *ngFor="let item of items()" [@row]="rowState">
             <th>({{item.quantity}}x) {{item.menuItem.name}}</th>
             <!-- o x indica quantas vezes tem aquele item la -->
             <td class="text-right">{{item.value() | currency: 'BRL': true}}</td>
