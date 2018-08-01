@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core'
 import { Restaurant } from './restaurant.model';
 import { trigger, style, transition, state, animate } from '@angular/animations';
 
