@@ -6,18 +6,25 @@ import { MenuComponent } from "./restaurant-detail/menu/menu.component";
 import { ReviewsComponent } from "./restaurant-detail/reviews/reviews.component";
 import { OrderSumaryComponent } from "./order-sumary/order-sumary.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { LoginComponent } from "./security/login/login.component"
+import { LoggedInGaurd } from "./security/loggedin.guard"
 
 export const ROUTES: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'restaurants', component: RestaurantsComponent},
+    {path: 'login/:to', component: LoginComponent},
+    {path: 'login', component: LoginComponent},
     {path: 'restaurants/:id', component: RestaurantDetailComponent,
     children: [
         {path: '', redirectTo: 'menu', pathMatch: 'full'},
         {path: 'menu', component: MenuComponent},
         {path: 'reviews', component: ReviewsComponent}
     ]},
-    {path: 'order', loadChildren: './order/order.module#OrderModule'},
+    {path: 'restaurants', component: RestaurantsComponent},
+    {path: 'order', loadChildren: './order/order.module#OrderModule',
+        canLoad: [LoggedInGaurd], canActivate: [LoggedInGaurd]},
     {path: 'about', loadChildren: './about/about.module#AboutModule'},
     {path: 'order-sumary', component: OrderSumaryComponent},
     {path: '**', component: NotFoundComponent}
 ]
+
+//genericas mais pra baixo e especificar mais pra cima
