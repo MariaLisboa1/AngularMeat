@@ -4,6 +4,7 @@ import { OrderService } from './order.service';
 import { CartItem } from '../restaurant-detail/shopping-cart/cart-item.model';
 import { Order, OrderItem } from './order.model';
 import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/do'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
@@ -19,6 +20,8 @@ export class OrderComponent implements OnInit {
 
   delivery: number = 8
   orderForm: FormGroup
+
+  orderId: string
 
   paymentOptions: RadioOption[] = [
     {label: 'Dinheiro', value: 'MON'},
@@ -75,15 +78,23 @@ export class OrderComponent implements OnInit {
     this.orderService.remove(item)
   }
 
+  //Metodo para mandar mensagem pro usuário caso ele saia sem finalizar a compra
+  isOrderCompleted(): boolean{
+    return this.orderId !== undefined
+  }
+
   checkOrder(order: Order){
     order.orderItems = this.cartItems()
         .map((item: CartItem)=> new OrderItem(item.quantity, item.menuItem.id))
       this.orderService.checkOrder(order)
+      //cont. pra verficar se ele quer desistir da compra
+      .do((orderId: string) =>{
+        this.orderId = orderId
+      })
+      //fim verificar desistir compra
         .subscribe( (orderId: string) => {
           this.router.navigate(['/order-sumary'])
           this.orderService.clear()
-        })
-    console.log(order);
-    
+        })    
   }
 }
